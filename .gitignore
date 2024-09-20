@@ -1,0 +1,17 @@
+# develop
+.idea
+
+__pycache__
+*.pyc
+
+# downloaded contents
+input/
+toolkit/data-juicer/
+toolkit/training/model_zoo/
+toolkit/training/data/
+toolkit/training/wandb/
+toolkit/training/work_dirs/
+
+# generated contents
+output/
+solution/
