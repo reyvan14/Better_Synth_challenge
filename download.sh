@@ -39,4 +39,48 @@ cd ${SCRIPT_DIR}/toolkit/training/data
 wget http://dail-wlcb.oss-cn-wulanchabu.aliyuncs.com/dj-competition/better_synth/data/stage_1/eval_stage_1.tar.gz
 tar zxvf eval_stage_1.tar.gz && rm -rf eval_stage_1.tar.gz
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 echo "Done"
