@@ -22,7 +22,8 @@ Better Synth 是一项以数据为中心的挑战赛，考察如何合成与清�
 2. 经过观察发现数据集存在很多分辨率较差以及无意义的图片，所以利用 `image_nsfw_filter` 和 `image_aesthetics_filter` 这两个算子过滤掉无意义和质量较差的图片，过滤掉不会带来太多收益的图片。
 3. 但是这两个算子也会“误杀”部分高质量的情况。采取原则是宁缺毋滥，因为脏数据给模型训练会带来更多负收益，所以尽量保留高质量的图片，减少低质量图片。（思考：可以考虑由大模型去进行筛选内容不适合的图片）
   
-![myplot092003](https://github.com/user-attachments/assets/6f3fbd8d-29c0-4d23-8660-9bc9d8fc2c63)
+![000111904](https://github.com/user-attachments/assets/4178b8c6-2465-43e3-af5d-a3fdac29470c)
+
 ![001229550](https://github.com/user-attachments/assets/d6bd9f16-e5be-42d3-8fa0-84b280f1af77)
 
 4. 经过过滤后，剩下的数据远少于200k，所以需要利用不够100k的数据合成更多的数据。一开始的出发点是图生文的想法来进行数据增强，并没想到文生图的方案。（思考：可以结合文生图进行数据增强）。
