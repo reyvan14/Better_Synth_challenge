@@ -1,1 +1,39 @@
+# 全局参数
+project_name: 'all'                                         # 项目名称，用于区分配置
+dataset_path: 'dj_synth_challenge/input/pretrain_stage_2/test.jsonl'                       # 数据集目录或文件路径，包含权重(0.0-1.0)，默认权重为1.0。
+                                                            # 接受的格式：'权重1(可选) 数据集1路径 权重2(可选) 数据集2路径'
+export_path: 'dj_synth_challenge/output/test.jsonl'                # 处理结果数据集的路径。支持的后缀包括['jsonl', 'json', 'parquet']
+export_shard_size: 0                                        # 导出数据集的分片大小（以字节为单位）。默认值为0，表示将整个数据集导出为一个文件。如果设置为正数，导出数据集将被分割为多个分片，每个分片的最大大小不超过export_shard_size
+export_in_parallel: false                                   # 是否以并行方式导出结果数据集到单个文件，通常会节省时间。仅在export_shard_size为0时有效，默认进程数与参数np相同。**注意**：如果设置为True，有时由于IO阻塞，并行导出可能需要更多时间，尤其对于非常大的数据集。这种情况下，设置为False虽然耗时更长，但可能更合适。
+np: 16                                                       # 处理数据集的子进程数
+                                      # 样本文本字段的键名，例如 `text`, `instruction`, `output`, ...
+                                                            # 注意：当前仅支持指定一个键名，对于需要多个键的情况，用户可以多次指定操作。设置多个键时，仅使用第一个键。
+
+# for multimodal data processing
+image_key: 'images'                                         # 存储样本图像路径列表的字段键名
+image_special_token: '<__dj__image>'                        # 表示图像的特殊标记
+
+eoc_special_token: ''                                       # 表示块结束的特殊标记
+# eoc_special_token: '<EOC>'  # 设置为一个特殊标记
+
+
+
+# process schedule: a list of several process operators with their arguments
+process:
+  # 过滤器操作
+
+  - image_nsfw_filter: # 根据图像中的 nsfw 分数过滤样本
+      hf_nsfw_model: Falconsai/nsfw_image_detection           # 用于 nsfw 分类的 Huggingface 模型名称
+      score_threshold: 0.0003                                   # 样本的 nsfw 分数阈值，范围从 0 到 1。nsfw 分数小于此阈值的样本将被保留。
+      any_or_all: any                                         # 当任何/所有图像符合过滤条件时保留此样本
+      mem_required: '1GB'                                     # 此操作（Op）利用深度神经网络模型进行计算，消耗大量内存，因此系统可用内存可能限制可启动的进程数
+
+  - image_aesthetics_filter: # 根据图像的美学评分过滤样本。
+      hf_scorer_model: shunk031/aesthetics-predictor-v2-sac-logos-ava1-l14-linearMSE # 美学预测器的 Huggingface 模型名称
+      min_score: 0.3                                          # 过滤范围的最小美学评分
+      max_score: 1.0                                          # 过滤范围的最大美学评分
+      any_or_all: any                                         # 当任何/所有图像符合过滤条件时保留此样本
+      mem_required: '1500MB'                                  # 此操作（Op）利用深度神经网络模型进行计算，消耗大量内存，因此系统可用内存可能限制可启动的进程数
+
+
 
