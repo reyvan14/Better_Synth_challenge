@@ -69,7 +69,7 @@ bash install.sh
 bash download.sh
 ```
 
-**step 3. 第二次清洗数据**
+**step 3. 第一次清洗数据**
 
 ```shell
 dj-process --config configs/config_test1.yaml
